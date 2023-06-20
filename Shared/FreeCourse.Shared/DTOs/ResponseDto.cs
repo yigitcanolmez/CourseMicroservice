@@ -9,6 +9,7 @@ namespace FreeCourse.Shared.DTOs
     {
         public T Data { get; private set; }
         public List<string> Errors { get; set; }
+
         [JsonIgnore]
         public int StatusCode { get; private set; }
         [JsonIgnore]
@@ -30,7 +31,7 @@ namespace FreeCourse.Shared.DTOs
         {
             return new ResponseDto<T> { Errors = new List<string> { errors }, StatusCode = statusCode, IsSuccessful = false };
         }
-
+        //Static Factory Method
 
 
 
