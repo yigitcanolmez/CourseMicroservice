@@ -6,6 +6,7 @@ using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddContainerServices(builder.Configuration);
+
 // Add services to the container.
 builder.Services.AddControllers();
 

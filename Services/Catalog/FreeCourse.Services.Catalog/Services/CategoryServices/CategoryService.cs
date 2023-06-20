@@ -6,10 +6,10 @@ using FreeCourse.Services.Catalog.Settings;
 using FreeCourse.Shared.DTOs;
 using MongoDB.Driver;
 
-namespace FreeCourse.Services.Catalog.Services
+namespace FreeCourse.Services.Catalog.Services.CategoryServices
 {
 
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly IMongoCollection<Category> _categoriesCollection;
         private readonly IMapper _mapper;
@@ -27,9 +27,17 @@ namespace FreeCourse.Services.Catalog.Services
 
         public async Task<Response<List<CategoryDTO>>> GetAllAsync()
         {
-            var categories = await _categoriesCollection.Find(category => true).ToListAsync();
+            var categories = await _categoriesCollection.Find<Category>(category => true).ToListAsync();
 
             var getMappedListDto = _mapper.Map<List<CategoryDTO>>(categories);
+            if (getMappedListDto.Count == 0)
+            {
+                _logger.LogInformation("No DATA!");
+
+                return Response<List<CategoryDTO>>.Fail(ResponseMessages.CATEGORY_NOT_FOUND, StatusCodes.Status404NotFound);
+
+            }
+            _logger.LogInformation("Successfuly list of data returned!");
 
             return Response<List<CategoryDTO>>.Success(getMappedListDto, StatusCodes.Status200OK);
         }
@@ -40,6 +48,8 @@ namespace FreeCourse.Services.Catalog.Services
             await _categoriesCollection.InsertOneAsync(category);
             var mapData = _mapper.Map<CategoryDTO>(category);
 
+            _logger.LogInformation("Successfuly created!");
+
             return Response<CategoryDTO>.Success(mapData, StatusCodes.Status200OK);
         }
         public async Task<Response<CategoryDTO>> GetByIdAsync(string id)
@@ -49,9 +59,13 @@ namespace FreeCourse.Services.Catalog.Services
 
             if (data == null)
             {
+                _logger.LogInformation("No DATA! ID = " + id);
+
                 return Response<CategoryDTO>.Fail(ResponseMessages.CATEGORY_NOT_FOUND, StatusCodes.Status404NotFound);
             }
             var mapData = _mapper.Map<CategoryDTO>(data);
+
+            _logger.LogInformation("Successfuly data returned!");
 
             return Response<CategoryDTO>.Success(mapData, StatusCodes.Status200OK);
         }

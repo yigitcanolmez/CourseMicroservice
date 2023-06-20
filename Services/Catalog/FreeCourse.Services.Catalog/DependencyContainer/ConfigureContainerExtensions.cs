@@ -1,4 +1,5 @@
-﻿using FreeCourse.Services.Catalog.Services;
+﻿ using FreeCourse.Services.Catalog.Services.CategoryServices;
+using FreeCourse.Services.Catalog.Services.CourseServices;
 using FreeCourse.Services.Catalog.Settings;
 using Microsoft.Extensions.Options;
 using System.Reflection;
@@ -22,6 +23,7 @@ namespace FreeCourse.Services.Catalog.DependencyContainer
             #endregion
             
             services.AddScoped<ICategoryService,CategoryService>();
+            services.AddScoped<ICourseService,CourseService>();
 
             return services;
         }
