@@ -9,4 +9,5 @@
         public string UserId { get; set; }
         public string CategoryId { get; set; }
         public FeatureDTO Feature { get; set; }
-    }    }
+    }
+}
