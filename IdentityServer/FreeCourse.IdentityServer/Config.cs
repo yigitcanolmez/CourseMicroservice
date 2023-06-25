@@ -23,6 +23,10 @@ namespace FreeCourse.IdentityServer
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
                    {
+                       new IdentityResources.Email(),
+                       new IdentityResources.OpenId(),
+                       new IdentityResources.Profile(),
+                       new IdentityResource(){Name = "roles", DisplayName= "Roels",Description = "Kullanıcı rolleri", UserClaims = new []{ "role"} }
 
                    };
 
