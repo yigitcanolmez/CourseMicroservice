@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace FreeCourse.IdentityServer
@@ -48,6 +49,18 @@ namespace FreeCourse.IdentityServer
                     ClientSecrets = {new Secret("secret".Sha256())},
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes={ "catalog_fullpermission", "photo_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+                },   new Client
+                {
+                     ClientId= "WebMvcClientForUser",
+                    ClientSecrets = {new Secret("secret".Sha256())},
+                    AllowOfflineAccess = true,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes={ IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, "roles",IdentityServerConstants.LocalApi.ScopeName    },
+                    AccessTokenLifetime = 1*60*60,
+                    RefreshTokenExpiration = TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime = (int)(DateTime.Now.AddDays(60) - DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 }
             };
     }

@@ -19,7 +19,7 @@ namespace FreeCourse.IdentityServer.Services
         public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
         {
             var existUser = await _userManager.FindByEmailAsync(context.UserName);
-            if (existUser != null)
+            if (existUser == null)
             {
                 var errors = new Dictionary<string, object>();
 
@@ -31,7 +31,7 @@ namespace FreeCourse.IdentityServer.Services
 
             var passwordCheck = await _userManager.CheckPasswordAsync(existUser, context.Password);
 
-            if (!passwordCheck)
+            if (passwordCheck == false)
             {
                 var errors = new Dictionary<string, object>();
 
