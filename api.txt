@@ -1,3 +1,4 @@
 Catalog API => 5011
 Identity => 5001
 PhotoStock => 5012
+BasketAPI => 5013
