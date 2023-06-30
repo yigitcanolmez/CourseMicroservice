@@ -97,13 +97,8 @@ namespace FreeCourse.Services.Discount.Services
             if (isAvailable == null)
                 return Response<NoContent>.Fail(Messages.DISCOUNT_NOT_FOUND, StatusCodes.Status400BadRequest);
 
-            var status = await _dbConnection.ExecuteAsync("UPDATE discount SET userid = @UserId, rate = @Rate, code = @Code where id = @Id)", new
-            {
-                UserId = discount.UserId,
-                Rate = discount.Rate,
-                Code = discount.Code,
-                Id = discount.Id
-            });
+            var status = await _dbConnection.ExecuteAsync("update discount set userid=@UserId, code=@Code, rate=@Rate where id=@Id", new { Id = discount.Id, UserId = discount.UserId, Code = discount.Code, Rate = discount.Rate });
+
 
             if (status > 0)
             {
