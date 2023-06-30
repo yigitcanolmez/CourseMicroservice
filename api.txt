@@ -1,4 +1,7 @@
-Catalog API => 5011
 Identity => 5001
+
+--APIs
+Catalog API => 5011
 PhotoStock => 5012
 BasketAPI => 5013
+DiscountAPI => 5014

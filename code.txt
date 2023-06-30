@@ -12,3 +12,13 @@ dotnet new is4aspid --name PROJEADI
 docker volume create portainer_data
 docker pull portainer/portainer-ce
 docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+
+-- POSTGRE CREATE TABLE 
+
+create table Discount(
+Id serial primary key,
+UserId varchar(100) unique not null,
+Rate smallint not null,
+Code varchar(30) not null,
+CreatedDate timestamp not null default CURRENT_TIMESTAMP
+)
