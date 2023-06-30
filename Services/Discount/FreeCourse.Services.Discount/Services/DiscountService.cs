@@ -54,7 +54,7 @@ namespace FreeCourse.Services.Discount.Services
             });
 
             var hasDiscount = discounts.FirstOrDefault();
-            if (hasDiscount != null)
+            if (hasDiscount == null)
             {
                 return Response<DiscountModel>.Fail(Messages.DISCOUNT_DELETING_ERROR, StatusCodes.Status400BadRequest);
             }
