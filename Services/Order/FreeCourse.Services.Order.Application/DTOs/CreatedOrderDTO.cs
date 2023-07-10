@@ -3,7 +3,5 @@
     public class CreatedOrderDTO
     {
         public int OrderId { get; set; }
-      
-
      }
 }
