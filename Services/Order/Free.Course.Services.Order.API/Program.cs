@@ -1,5 +1,14 @@
-var builder = WebApplication.CreateBuilder(args);
+using FreeCourse.Services.Order.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<OrderDbContext>(opt=>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), configure =>
+    {
+        configure.MigrationsAssembly("FreeCourse.Services.Order.Infrastructure");
+    });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
