@@ -107,24 +107,6 @@
         "AuthenticationProviderKey": "GatewayAuthenticationShceme",
         "AllowedScopes": [ "fake_payment_fullpermission" ]
       }
-    },
-    {
-      "DownstreamPathTemplate": "/api/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5001
-        }
-      ],
-      //requests from client
-      "UpstreamPathTemplate": "/services/identity/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Delete", "Put", "Patch" ],
-      "UpstreamScheme": "http",
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "GatewayAuthenticationShceme",
-        "AllowedScopes": [ "identity_fullpermission" ]
-      }
     }
   ],
   "GlobalConfiguration": {
