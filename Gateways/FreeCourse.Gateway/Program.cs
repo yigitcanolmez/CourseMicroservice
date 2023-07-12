@@ -3,12 +3,13 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Configuration
-//    .SetBasePath(builder.Environment.ContentRootPath.ToLower())
-//    .AddJsonFile("appsettings.json", true, true)
-//    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName.ToLower()}.json", true, true)
-//    .AddJsonFile($"configuration.{builder.Environment.EnvironmentName.ToLower()}.json")
-//    .AddEnvironmentVariables();
+builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationShceme", opt =>
+{
+    opt.Authority = builder.Configuration["IdentityServerURL"];
+    opt.Audience = "resource_gateway";
+    opt.RequireHttpsMetadata = false;
+});
+
 
 builder.Configuration.AddJsonFile($"configuration.{builder.Environment.EnvironmentName.ToLower()}.json")
     .AddEnvironmentVariables();
