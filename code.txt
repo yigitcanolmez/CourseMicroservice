@@ -22,3 +22,6 @@ Rate smallint not null,
 Code varchar(30) not null,
 CreatedDate timestamp not null default CURRENT_TIMESTAMP
 )
+
+-- RabbitMQ container with manager
+docker run -d -p 15672:15672 -p 5672:5672 --name RabbitMQContainer rabbitmq:3.8.14-management
