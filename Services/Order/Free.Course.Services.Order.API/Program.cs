@@ -1,5 +1,7 @@
+using FreeCourse.Services.Order.Application.Consumers;
 using FreeCourse.Services.Order.Infrastructure;
 using FreeCourse.Shared.Services;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +11,9 @@ using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
 var requiredAuthorizedPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 
@@ -17,6 +22,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     opt.Authority = builder.Configuration["IdentityServerURL"];
     opt.Audience = "resource_order";
     opt.RequireHttpsMetadata = false;
+});
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<CreateOrderMessageCommandConsumer>();
+    x.UsingRabbitMq((cont, conf) =>
+    {
+        conf.Host(builder.Configuration["RabbitMQUrl"], "/", host =>
+        {
+            host.Username("guest");
+            host.Password("guest");
+        });
+        conf.ReceiveEndpoint("created-order-service-queue", e =>
+        {
+            e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(cont);
+        });
+    });
 });
 
 builder.Services.AddDbContext<OrderDbContext>(opt =>
