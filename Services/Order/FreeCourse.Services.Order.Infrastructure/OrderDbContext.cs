@@ -25,7 +25,7 @@ namespace FreeCourse.Services.Order.Infrastructure
 
             modelBuilder.Entity<Domain.OrderAggregate.OrderItem>().Property(x => x.Price).HasColumnType("decimal(18,2)");
 
-            //modelBuilder.Entity<Domain.OrderAggregate.Order>().OwnsOne(p => p.Address).WithOwner();
+            modelBuilder.Entity<Domain.OrderAggregate.Order>().OwnsOne(p => p.Address).WithOwner();
 
             base.OnModelCreating(modelBuilder);
         }
